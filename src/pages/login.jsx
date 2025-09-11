@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const signupSchema = z.object({
+const loginSchema = z.object({
   email: z
     .string()
     .email({
@@ -40,7 +40,7 @@ const signupSchema = z.object({
 
 const LoginPage = () => {
   const methods = useForm({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -56,7 +56,9 @@ const LoginPage = () => {
           <Card className="w-[500px]">
             <CardHeader className="align-items-center flex justify-center text-center">
               <CardTitle className="text-3xl">Entre na sua conta</CardTitle>
-              <CardDescription>Insira os seus dados abaixo.</CardDescription>
+              <CardDescription>
+                Entre com a sua conta inserindo os seus dados abaixo.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* E-MAIL */}
