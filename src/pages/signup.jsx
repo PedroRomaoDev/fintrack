@@ -112,6 +112,7 @@ const SignupPage = () => {
     };
     init();
   }, []);
+
   const handleSubmit = (data) => {
     signupMutation.mutate(data, {
       onSuccess: (createdUser) => {
