@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { toast } from "sonner";
@@ -90,6 +90,28 @@ const SignupPage = () => {
       terms: false,
     },
   });
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (!accessToken && !refreshToken) return;
+
+        const response = await api.get("users/me", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        console.error(error);
+      }
+    };
+    init();
+  }, []);
   const handleSubmit = (data) => {
     signupMutation.mutate(data, {
       onSuccess: (createdUser) => {
@@ -104,7 +126,7 @@ const SignupPage = () => {
       onError: (error) => {
         let errorMessage = "Erro ao criar a conta. Por favor, tente novamente.";
         if (axios.isAxiosError(error) && error.response) {
-          // 'error.response.data.message' para acessar a mensagem da sua API
+          // 'error.response.data.message' para acessar a mensagem da API
           // o '??' garante que se 'message' for nulo ou undefined, a mensagem padrão fica
           errorMessage = error.response.data.message ?? errorMessage;
         }
@@ -114,7 +136,7 @@ const SignupPage = () => {
   };
 
   if (user) {
-    return <h1>Eai pedro</h1>;
+    return <h1>{user.first_name}</h1>;
   }
 
   return (
