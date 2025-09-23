@@ -64,4 +64,19 @@ export const UserService = {
       email: response.data.email,
     };
   },
+  /**
+   * Retornar o balanço do usuário autenticado
+   * @param {*} input.from Data inicial do balanço (YYYY-MM-DD)
+   * @param {*} input.to Data final do balanço (YYYY-MM-DD)
+   * @returns {Object} Balanço do usuário autenticado
+   */
+  getBalance: async (input) => {
+    const queryParams = new URLSearchParams();
+    queryParams.set("from", input.from);
+    queryParams.set("to", input.to);
+    const response = await protectedApi.get(
+      `/users/me/balance?${queryParams.toString()}`,
+    );
+    return response.data;
+  },
 };
