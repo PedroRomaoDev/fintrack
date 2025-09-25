@@ -35,7 +35,14 @@ const DateSelection = () => {
 
     if (date.from && date.to) {
       navigate(`/?${queryParams.toString()}`);
-      queryClient.invalidateQueries({ queryKey: ["balance", user.id] });
+      queryClient.invalidateQueries({
+        queryKey: [
+          "balance",
+          user.id,
+          format(date.from, "yyyy-MM-dd"),
+          format(date.to, "yyyy-MM-dd"),
+        ],
+      });
     }
   }, [navigate, date, queryClient, user.id]);
 
