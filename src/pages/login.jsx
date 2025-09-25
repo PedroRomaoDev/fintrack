@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router";
 import { z } from "zod";
@@ -41,7 +42,7 @@ const loginSchema = z.object({
 
 const LoginPage = () => {
   // const {user: userTest} = useContext(AuthContext);
-  const { user, login, isInitializing } = useAuthContext();
+  const { user, login, isInitializing, isLoginPending } = useAuthContext();
 
   const methods = useForm({
     resolver: zodResolver(loginSchema),
@@ -103,7 +104,10 @@ const LoginPage = () => {
               />
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Fazer login</Button>
+              <Button className="w-full" disabled={isLoginPending}>
+                {isLoginPending && <Loader2Icon className="animate-spin" />}
+                Fazer login
+              </Button>
             </CardFooter>
           </Card>
         </form>

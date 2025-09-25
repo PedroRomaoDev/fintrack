@@ -12,6 +12,8 @@ import { UserService } from "@/services/user";
 export const AuthContext = createContext({
   user: null,
   isInitializing: true,
+  isLoginPending: false,
+  isSignupPending: false,
   login: () => {},
   signup: () => {},
   signOut: () => {},
@@ -121,6 +123,8 @@ export const AuthContextProvider = ({ children }) => {
         login: login,
         signup: signup,
         isInitializing,
+        isLoginPending: loginMutation.isPending,
+        isSignupPending: signupMutation.isPending,
         signOut,
       }}
     >

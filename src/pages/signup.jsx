@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router";
 import { z } from "zod";
@@ -59,7 +60,7 @@ const signupSchema = z
   });
 
 const SignupPage = () => {
-  const { user, signup, isInitializing } = useAuthContext();
+  const { user, signup, isInitializing, isSignupPending } = useAuthContext();
 
   const methods = useForm({
     resolver: zodResolver(signupSchema),
@@ -198,7 +199,10 @@ const SignupPage = () => {
               />
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Criar conta</Button>
+              <Button className="w-full" disabled={isSignupPending}>
+                {isSignupPending && <Loader2Icon className="animate-spin" />}
+                Criar conta
+              </Button>
             </CardFooter>
           </Card>
         </form>
