@@ -1,12 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  Loader2Icon,
   PiggyBankIcon,
   PlusIcon,
   TrendingDownIcon,
   TrendingUpIcon,
 } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
+import { toast } from "sonner";
 import z from "zod";
 
 import {
@@ -19,6 +23,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useAuthContext } from "@/contexts/auth";
+import { TransactionService } from "@/services/transaction";
 
 import { Button } from "./ui/button";
 import { DatePicker } from "./ui/date-picker";
@@ -33,7 +39,7 @@ import {
 import { Input } from "./ui/input";
 
 const formSchema = z.object({
-  title: z.string().trim().min(1, { message: "O título é obrigatório." }),
+  name: z.string().trim().min(1, { message: "O título é obrigatório." }),
   amount: z.number({ message: "O valor é obrigatório." }),
   date: z.date({ message: "A data é obrigatória." }),
   type: z.enum(["EARNING", "EXPENSE", "INVESTMENT"], {
@@ -42,10 +48,26 @@ const formSchema = z.object({
 });
 
 const AddTransacionButton = () => {
+  const { user } = useAuthContext();
+  const queryClient = useQueryClient();
+  const { mutateAsync: createTransaction, isPending } = useMutation({
+    mutationKey: ["createTransaction"],
+    mutationFn: (input) => TransactionService.create(input),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["balance", user.id] });
+    },
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message ||
+          "Ocorreu um erro ao criar a transação. Tente novamente.",
+      );
+    },
+  });
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      name: "",
       amount: 50,
       date: new Date(),
       type: "EARNING",
@@ -53,12 +75,18 @@ const AddTransacionButton = () => {
     shouldUnregister: true,
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await createTransaction(data);
+      setDialogIsOpen(false);
+      toast.success("Transação criada com sucesso!");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <>
-      <Dialog>
+      <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
         <DialogTrigger asChild>
           <Button>
             <PlusIcon />
@@ -75,7 +103,7 @@ const AddTransacionButton = () => {
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="title"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Título</FormLabel>
@@ -181,11 +209,17 @@ const AddTransacionButton = () => {
               ></FormField>
               <DialogFooter className="sm:space-x-4">
                 <DialogClose asChild>
-                  <Button type="reset" variant="secondary" className="w-full">
+                  <Button
+                    type="reset"
+                    variant="secondary"
+                    className="w-full"
+                    disabled={isPending}
+                  >
                     Cancelar
                   </Button>
                 </DialogClose>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={isPending}>
+                  {isPending && <Loader2Icon className="animate-spin" />}
                   Adicionar
                 </Button>
               </DialogFooter>
