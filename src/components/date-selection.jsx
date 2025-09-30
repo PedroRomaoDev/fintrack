@@ -61,6 +61,7 @@ const DateSelection = () => {
           format(date.from, "yyyy-MM-dd"),
           format(date.to, "yyyy-MM-dd"),
         ],
+        // exact: true, // padrão é falso
       });
     }
   }, [navigate, date, queryClient, user.id]);
