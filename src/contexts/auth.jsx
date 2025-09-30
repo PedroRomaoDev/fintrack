@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { useLogin, useSignUp } from "@/api/hooks/user";
 import { UserService } from "@/api/services/user";
 import {
   LOCAL_STORAGE_ACCESS_TOKEN_KEY,
@@ -35,22 +35,9 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isInitializing, setIsInitializing] = useState(true);
 
-  const signupMutation = useMutation({
-    mutationKey: ["signup"],
-    mutationFn: async (variables) => {
-      // Chamada para a API de cadastro
-      const response = await UserService.signup(variables);
-      return response;
-    },
-  });
+  const signupMutation = useSignUp();
 
-  const loginMutation = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async (variables) => {
-      const response = await UserService.login(variables);
-      return response;
-    },
-  });
+  const loginMutation = useLogin();
 
   useEffect(() => {
     const init = async () => {
