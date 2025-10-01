@@ -11,7 +11,7 @@ export const createTransactionMutationKey = ["createTransaction"];
 export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
   const { user } = useAuthContext();
-  useMutation({
+  return useMutation({
     mutationKey: createTransactionMutationKey,
     mutationFn: (input) => TransactionService.create(input),
     onSuccess: () => {
