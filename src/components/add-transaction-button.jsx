@@ -1,4 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Loader2Icon,
   PiggyBankIcon,
@@ -7,12 +6,9 @@ import {
   TrendingUpIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
-import z from "zod";
 
-import { useCreateTransaction } from "@/api/hooks/transaction";
 import {
   Dialog,
   DialogClose,
@@ -23,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useCreateTransactionForm } from "@/forms/hooks/transaction";
 
 import { Button } from "./ui/button";
 import { DatePicker } from "./ui/date-picker";
@@ -36,38 +33,20 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 
-const formSchema = z.object({
-  name: z.string().trim().min(1, { message: "O título é obrigatório." }),
-  amount: z.number({ message: "O valor é obrigatório." }),
-  date: z.date({ message: "A data é obrigatória." }),
-  type: z.enum(["EARNING", "EXPENSE", "INVESTMENT"], {
-    message: "O tipo é obrigatório.",
-  }),
-});
-
 const AddTransacionButton = () => {
-  const { mutateAsync: createTransaction, isPending } = useCreateTransaction();
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      amount: 50,
-      date: new Date(),
-      type: "EARNING",
+  const { form, onSubmit, isPending } = useCreateTransactionForm({
+    onSuccess: () => {
+      setDialogIsOpen(false);
+      toast.success("Transacão criada com sucesso!");
     },
-    shouldUnregister: true,
+    onError: () => {
+      toast.error(
+        "Ocorreu um erro ao criar a transação. Por favor, tente novamente.",
+      );
+    },
   });
 
-  const onSubmit = async (data) => {
-    try {
-      await createTransaction(data);
-      setDialogIsOpen(false);
-      toast.success("Transação criada com sucesso!");
-    } catch (error) {
-      console.error(error);
-    }
-  };
   return (
     <>
       <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
