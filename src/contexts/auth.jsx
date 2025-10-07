@@ -63,44 +63,49 @@ export const AuthContextProvider = ({ children }) => {
     init();
   }, []);
 
-  const signup = (data) => {
-    signupMutation.mutate(data, {
-      onSuccess: (createdUser) => {
-        setUser(createdUser);
-        setTokens(createdUser.tokens);
-        toast.success("Conta criada com sucesso!");
-      },
-      onError: (error) => {
-        let errorMessage = "Erro ao criar a conta. Por favor, tente novamente.";
-        if (axios.isAxiosError(error) && error.response) {
-          errorMessage = error.response.data.message ?? errorMessage;
-        }
-        toast.error(errorMessage);
-      },
-    });
+  const signup = async (data) => {
+    try {
+      const createdUser = await signupMutation.mutateAsync(data);
+      setUser(createdUser);
+      setTokens(createdUser.tokens);
+      toast.success("Conta criada com sucesso!");
+    } catch (error) {
+      console.error(error);
+      let errorMessage = "Erro ao criar a conta. Por favor, tente novamente.";
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data.message ?? errorMessage;
+      }
+      toast.error(errorMessage);
+    }
   };
 
-  const login = (data) => {
-    loginMutation.mutate(data, {
-      onSuccess: (loggedUser) => {
-        setUser(loggedUser);
-        setTokens(loggedUser.tokens);
-        toast.success("Login realizado com sucesso!");
-      },
-      onError: (error) => {
-        let errorMessage =
-          "Erro ao realizar login. Por favor, tente novamente.";
-        if (axios.isAxiosError(error) && error.response) {
-          errorMessage = error.response.data.message ?? errorMessage;
-        }
-        toast.error(errorMessage);
-      },
-    });
+  const login = async (data) => {
+    try {
+      const loggedUser = await loginMutation.mutateAsync(data);
+      setUser(loggedUser);
+      setTokens(loggedUser.tokens);
+      toast.success("Login realizado com sucesso!");
+    } catch (error) {
+      console.error(error);
+      let errorMessage = "Erro ao realizar login. Por favor, tente novamente.";
+      if (axios.isAxiosError(error) && error.response) {
+        errorMessage = error.response.data.message ?? errorMessage;
+      }
+      toast.error(errorMessage);
+    }
   };
 
   const signOut = () => {
-    setUser(null);
-    removeTokens();
+    try {
+      setUser(null);
+      removeTokens();
+      toast.success("Logout realizado com sucesso. Até breve!");
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        "Ocorreu um erro ao sair da conta. Por favor, tente novamente",
+      );
+    }
   };
 
   return (
