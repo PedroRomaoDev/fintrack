@@ -1,5 +1,5 @@
 import { LogInIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 
 import fintrack from "@/assets/images/fintrack.png";
 import logo from "@/assets/images/logo.svg";
@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/contexts/auth";
 
 const WelcomePage = () => {
-  const { isInitializing } = useAuthContext();
+  const { isInitializing, user } = useAuthContext();
   if (isInitializing) {
     return null;
+  }
+  if (user) {
+    return <Navigate to="/home" replace />;
   }
 
   return (
