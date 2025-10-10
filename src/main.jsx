@@ -12,6 +12,7 @@ import HomePage from "./pages/Home";
 import LoginPage from "./pages/login";
 import NotFoundPage from "./pages/not-found";
 import SignupPage from "./pages/signup";
+import WelcomePage from "./pages/welcome";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,8 @@ createRoot(document.getElementById("root")).render(
       <AuthContextProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
 

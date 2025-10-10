@@ -36,7 +36,7 @@ const LoginPage = () => {
   }
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return (
