@@ -32,10 +32,12 @@ const WelcomePage = () => {
           controle do seu orçamento.
         </p>
 
-        <Button variant="outline">
-          <LogInIcon className="mr-2" />
-          <Link to="/login">Fazer login ou criar conta</Link>
-        </Button>
+        <Link to="/login">
+          <Button variant="outline" className="w-[488px]">
+            <LogInIcon className="mr-2" />
+            Fazer login ou criar conta
+          </Button>
+        </Link>
       </div>
 
       {/* DIREITA */}
