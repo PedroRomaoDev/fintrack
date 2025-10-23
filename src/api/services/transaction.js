@@ -12,7 +12,12 @@ export const TransactionService = {
    * @returns {Object} Transação criada
    */
   create: async (input) => {
-    const response = await protectedApi.post("/transactions/me", input);
+    const response = await protectedApi.post("/transactions/me", {
+      name: input.name,
+      amount: input.amount,
+      type: input.type,
+      date: input.date,
+    });
     return response.data;
   },
 
@@ -25,6 +30,27 @@ export const TransactionService = {
   getAll: async (input) => {
     const query = queryString.stringify({ from: input.from, to: input.to });
     const response = await protectedApi.get(`/transactions/me?${query}`);
+
+    return response.data;
+  },
+  /**
+   * Cria uma transação para o usuário autenticado
+   * @param {*} input Dados da transação
+   * @param {*} input.id ID da transação
+   * @param {*} input.name Nome da transação
+   * @param {*} input.date Data da transação (YYYY-MM-DD)
+   * @param {*} input.amount Valor da transação
+   * @param {*} input.type Tipo da transação (EARNING/EXPENSE/INVESTMENT)
+   * @param {*}
+   * @returns {Object} Transações
+   */
+  update: async (input) => {
+    const response = await protectedApi.patch(`/transactions/me?${input.id}`, {
+      name: input.name,
+      date: input.date,
+      amount: input.amount,
+      type: input.type,
+    });
 
     return response.data;
   },
