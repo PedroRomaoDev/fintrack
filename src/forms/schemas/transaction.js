@@ -8,3 +8,7 @@ export const createTransactionFormSchema = z.object({
     message: "O tipo é obrigatório.",
   }),
 });
+
+export const editTransactionFormSchema = createTransactionFormSchema.extend({
+  id: z.uuid(),
+});
