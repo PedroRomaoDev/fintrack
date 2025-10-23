@@ -45,7 +45,7 @@ export const TransactionService = {
    * @returns {Object} Transações
    */
   update: async (input) => {
-    const response = await protectedApi.patch(`/transactions/me?${input.id}`, {
+    const response = await protectedApi.patch(`/transactions/me/${input.id}`, {
       name: input.name,
       date: input.date,
       amount: input.amount,
