@@ -1,15 +1,11 @@
 import { ExternalLinkIcon } from "lucide-react";
-import {
-  Loader2Icon,
-  PiggyBankIcon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-} from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { useEditTransactionForm } from "@/forms/hooks/transaction";
 
+import TransactionTypeSelect from "./transaction-type-select";
 import { Button } from "./ui/button";
 import CurrencyInput from "./ui/currency-input";
 import { DatePicker } from "./ui/date-picker";
@@ -117,38 +113,10 @@ const EditTransactionButton = ({ transaction }) => {
                 <FormItem>
                   <FormLabel>Tipo</FormLabel>
                   <FormControl>
-                    <div className="grid grid-cols-3 gap-4">
-                      <Button
-                        variant={
-                          field.value === "EARNING" ? "secondary" : "outline"
-                        }
-                        type="button"
-                        onClick={() => field.onChange("EARNING")}
-                      >
-                        <TrendingUpIcon className="text-primary-green" />
-                        Ganho
-                      </Button>
-                      <Button
-                        variant={
-                          field.value === "EXPENSE" ? "secondary" : "outline"
-                        }
-                        type="button"
-                        onClick={() => field.onChange("EXPENSE")}
-                      >
-                        <TrendingDownIcon className="text-primary-red" />
-                        Gasto
-                      </Button>
-                      <Button
-                        variant={
-                          field.value === "INVESTMENT" ? "secondary" : "outline"
-                        }
-                        type="button"
-                        onClick={() => field.onChange("INVESTMENT")}
-                      >
-                        <PiggyBankIcon className="text-primary-blue" />
-                        Investimento
-                      </Button>
-                    </div>
+                    <TransactionTypeSelect
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
