@@ -9,22 +9,30 @@ import EditTransactionButton from "./edit-transaction-button";
 import TransactionTypeBadge from "./transaction-type-badge";
 import { DataTable } from "./ui/data-table";
 import { ScrollArea } from "./ui/scroll-area";
-
+import SortableColumnHeader from "./ui/sortable-column-header";
 export const columns = [
   {
     accessorKey: "name",
-    header: "Título",
+    header: ({ column }) => {
+      return (
+        <SortableColumnHeader column={column}>Título</SortableColumnHeader>
+      );
+    },
   },
   {
     accessorKey: "type",
-    header: "Tipo",
+    header: ({ column }) => {
+      return <SortableColumnHeader column={column}>Tipo</SortableColumnHeader>;
+    },
     cell: ({ row: { original: transaction } }) => {
       return <TransactionTypeBadge variant={transaction.type.toLowerCase()} />;
     },
   },
   {
     accessorKey: "date",
-    header: "Data",
+    header: ({ column }) => {
+      return <SortableColumnHeader column={column}>Data</SortableColumnHeader>;
+    },
     cell: ({ row: { original: transaction } }) => {
       return format(new Date(transaction.date), "dd 'de' MMMM 'de' yyy", {
         locale: ptBR,
@@ -33,7 +41,9 @@ export const columns = [
   },
   {
     accessorKey: "amount",
-    header: "Valor",
+    header: ({ column }) => {
+      return <SortableColumnHeader column={column}>Valor</SortableColumnHeader>;
+    },
     cell: ({ row: { original: transaction } }) => {
       return formatCurrency(transaction.amount);
     },
