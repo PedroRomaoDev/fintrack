@@ -4,12 +4,14 @@ import { useSearchParams } from "react-router";
 
 import { useGetTransactions } from "@/api/hooks/transaction";
 import { formatCurrency } from "@/helpers/currency";
+import { getTransactionDate } from "@/helpers/date";
 
 import EditTransactionButton from "./edit-transaction-button";
 import TransactionTypeBadge from "./transaction-type-badge";
 import { DataTable } from "./ui/data-table";
 import { ScrollArea } from "./ui/scroll-area";
 import SortableColumnHeader from "./ui/sortable-column-header";
+
 export const columns = [
   {
     accessorKey: "name",
@@ -34,7 +36,7 @@ export const columns = [
       return <SortableColumnHeader column={column}>Data</SortableColumnHeader>;
     },
     cell: ({ row: { original: transaction } }) => {
-      return format(new Date(transaction.date), "dd 'de' MMMM 'de' yyy", {
+      return format(getTransactionDate(transaction), "dd 'de' MMMM 'de' yyy", {
         locale: ptBR,
       });
     },

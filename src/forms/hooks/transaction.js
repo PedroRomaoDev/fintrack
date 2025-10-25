@@ -6,6 +6,7 @@ import {
   useCreateTransaction,
   useEditTransaction,
 } from "@/api/hooks/transaction";
+import { getTransactionDate } from "@/helpers/date";
 
 import {
   createTransactionFormSchema,
@@ -38,27 +39,24 @@ export const useCreateTransactionForm = ({ onSuccess, onError }) => {
   return { form, onSubmit, isPending };
 };
 
+const getEditTransactionFormDefaultValues = (transaction) => ({
+  name: transaction.name,
+  amount: parseFloat(transaction.amount),
+  date: getTransactionDate(transaction),
+  type: transaction.type,
+});
+
 export const useEditTransactionForm = ({ transaction, onSuccess, onError }) => {
   const { mutateAsync: updateTransaction, isPending } = useEditTransaction();
 
   const form = useForm({
     resolver: zodResolver(editTransactionFormSchema),
-    defaultValues: {
-      name: transaction?.name,
-      amount: parseFloat(transaction?.amount),
-      date: new Date(transaction?.date),
-      type: transaction?.type,
-    },
+    defaultValues: getEditTransactionFormDefaultValues(transaction),
     shouldUnregister: true,
   });
 
   useEffect(() => {
-    form.reset({
-      name: transaction?.name,
-      amount: parseFloat(transaction?.amount),
-      date: new Date(transaction?.date),
-      type: transaction?.type,
-    });
+    form.reset(getEditTransactionFormDefaultValues(transaction));
     form.setValue("id", transaction.id);
   }, [form, transaction]);
 
