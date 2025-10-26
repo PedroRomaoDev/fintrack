@@ -57,6 +57,7 @@ const TransactionTypeChart = () => {
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
+          style={{ width: "100%", height: 250 }}
         >
           <PieChart>
             <ChartTooltip
