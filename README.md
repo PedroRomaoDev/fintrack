@@ -6,14 +6,14 @@
 ![Axios](https://img.shields.io/badge/Axios-HTTP-blue)
 ![JWT](https://img.shields.io/badge/Auth-JWT-green)
 
-# 💰 FinTrack
+# FinTrack
 
 **FinTrack** – Sistema financeiro fullstack para controle de receitas, despesas e investimentos com autenticação JWT e interface moderna.  
 Projeto desenvolvido com foco em **boas práticas de arquitetura**, **segurança**, **escalabilidade** e **organização** — para portfólio, uso acadêmico e pessoal.
 
 ---
 
-## 🚀 Visão geral
+## Visão geral
 
 Frontend em **React + Vite** consumindo uma **API RESTful** hospedada no Render.  
 O projeto utiliza **Tailwind CSS** com o design system **shadcn/ui**, **React Query** para gerenciamento de dados, **Axios** com interceptors para controle de autenticação via JWT e **Context API** para o gerenciamento de estado global de autenticação.
@@ -27,20 +27,20 @@ https://finance-app-api-k48s.onrender.com
 
 ## 🧩 Tecnologias principais
 
-- ⚛️ **React (Vite)**
-- 🎨 **Tailwind CSS**
-- 🧱 **Shadcn/ui** (Design System)
-- 🔄 **React Query (TanStack)**
-- 🌐 **Axios + Interceptors**
-- 🔑 **JWT Authentication**
-- 🧠 **Context API (Auth Context)**
-- 📈 **Recharts** (gráficos dinâmicos)
-- 🧩 **Service Layer Architecture**
-- 🧹 **ESLint + Prettier + Husky**
+- **React (Vite)**
+- **Tailwind CSS**
+- **Shadcn/ui** (Design System)
+- **React Query (TanStack)**
+- **Axios + Interceptors**
+- **JWT Authentication**
+- **Context API (Auth Context)**
+- **Recharts** (gráficos dinâmicos)
+- **Service Layer Architecture**
+- **ESLint + Prettier + Husky**
 
 ---
 
-## ⚙️ Instalação & execução
+## Instalação & execução
 
 > **Pré-requisitos:**  
 > Node.js v16+ e npm ou yarn instalados.
@@ -62,7 +62,7 @@ https://finance-app-api-k48s.onrender.com
    ```
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```
 fintrack/
@@ -83,26 +83,26 @@ fintrack/
 
 ---
 
-## 🧠 Destaques arquiteturais
+## Destaques arquiteturais
 
-### 🧱 **Service Layer**
+### **Service Layer**
 Centraliza as chamadas à API e aplica interceptors responsáveis por:
 - Inserir o token JWT automaticamente nos headers
 - Tratar erros globais (401, 403, 500)
 - Fazer refresh de tokens quando aplicável
 
-### ⚡ **React Query**
+### **React Query**
 Gerencia cache, refetch e sincronização de estado com a API de forma performática e reativa.
 
-### 🔒 **Context API (Auth Context)**
+### **Context API (Auth Context)**
 Mantém as informações do usuário autenticado, expõe métodos como `login()`, `logout()`, `refresh()` e controla o acesso a rotas privadas.
 
-### 🎨 **Design System**
+### **Design System**
 A base visual é construída com **Shadcn/ui + Tailwind**, garantindo consistência, responsividade e velocidade no desenvolvimento.
 
 ---
 
-## 🔐 Autenticação & Segurança
+## Autenticação & Segurança
 
 - **JWT Authentication:** gerenciamento de sessão seguro via token.  
 - **Axios Interceptors:** automatiza inclusão do token e tratamento de erros.
@@ -111,7 +111,7 @@ A base visual é construída com **Shadcn/ui + Tailwind**, garantindo consistên
 
 ---
 
-## ✨ Funcionalidades principais
+## Funcionalidades principais
 
 - Login e Logout com JWT  
 - Dashboard de finanças com gráficos  
@@ -123,7 +123,7 @@ A base visual é construída com **Shadcn/ui + Tailwind**, garantindo consistên
 
 ---
 
-## 🧰 Boas práticas implementadas
+## Boas práticas implementadas
 
 - **Arquitetura modular** (Service Layer, Hooks, Contexts)
 - **Clean Code & Separation of Concerns**
@@ -134,7 +134,7 @@ A base visual é construída com **Shadcn/ui + Tailwind**, garantindo consistên
 
 ---
 
-## 👥 Contribuição
+## Contribuição
 
 Contribuições são bem-vindas! 🎯
 
@@ -155,9 +155,9 @@ Contribuições são bem-vindas! 🎯
 
 ---
 
-## 📞 Contato
+## Contato
 
-👨‍💻 **Autor:** Pedro Romão
-📧 **E-mail:** pedro7ntj@gmail.com
-🔗 **LinkedIn:** [https://www.linkedin.com/in/pedro-rom%C3%A3o-2615572b3/](https://www.linkedin.com/in/pedro-rom%C3%A3o-2615572b3/)  
+ **Autor:** Pedro Romão<br>  
+ **E-mail:** pedro7ntj@gmail.com<br>  
+ **LinkedIn:** [https://www.linkedin.com/in/pedro-rom%C3%A3o-2615572b3/](https://www.linkedin.com/in/pedro-rom%C3%A3o-2615572b3/)    
 
