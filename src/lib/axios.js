@@ -6,11 +6,11 @@ import {
 } from "@/constants/local-storage";
 
 export const protectedApi = axios.create({
-  baseURL: "https://finance-app-api-k48s.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 export const publicApi = axios.create({
-  baseURL: "https://finance-app-api-k48s.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 protectedApi.interceptors.request.use((request) => {
