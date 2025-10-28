@@ -87,7 +87,7 @@ const TransactionTypeChart = () => {
                 icon={
                   <TrendingUpIcon className="text-primary-green" size={16} />
                 }
-                label="Gastos"
+                label="Ganhos"
               />
             }
             value={`${data?.earningsPercentage}%`}
