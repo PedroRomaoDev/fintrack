@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { Toaster } from "./components/ui/sonner";
 import { AuthContextProvider } from "./contexts/auth";
-import HomePage from "./pages/Home";
+import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import NotFoundPage from "./pages/not-found";
 import SignupPage from "./pages/signup";
